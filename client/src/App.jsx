@@ -4,6 +4,8 @@ import "./App.css";
 import HomePage from "./pages/HomePage.jsx";
 import ViewProductPage from "./pages/ViewProductPage.jsx";
 
+import { DataContext } from "./context/DataContext.jsx";
+
 function App() {
   const userData = {
     username: "John",
@@ -12,14 +14,24 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product/view/:id" element={<ViewProductPage />} />
-        </Routes>
-      </Router>
-    </div>
+    <>
+      <div className="App">
+        <DataContext.Provider
+          value={{
+            usernameState: userData.username,
+            levelState: userData.level,
+            avatarState: userData.avatar,
+          }}
+        >
+          <Router>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/product/view/:id" element={<ViewProductPage />} />
+            </Routes>
+          </Router>
+        </DataContext.Provider>
+      </div>
+    </>
   );
 }
 
